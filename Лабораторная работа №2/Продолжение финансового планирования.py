@@ -9,4 +9,8 @@ while i > 0:
     money_capital += spend - salary
     spend *= 1.03
     i -= 1
-print(f"Подушка безопасности, чтобы протянуть {months} месяцев без долгов:", round(money_capital))
+for j in range(20000):
+    if  0 < j - money_capital < 1:
+        print(j)
+        money_capital = j
+print(f"Подушка безопасности, чтобы протянуть {months} месяцев без долгов:", money_capital)
