@@ -1,6 +1,6 @@
 # TODO импортировать необходимые молули
+import csv #Добавляю библиотеки для работы с csv и json файлами
 import json
-import csv
 
 
 INPUT_FILENAME = "input.csv"
@@ -8,21 +8,21 @@ OUTPUT_FILENAME = "output.json"
 
 
 def task() -> None:
-    with open(INPUT_FILENAME) as file:
-        reader = csv.reader(file)
-        arr = []
-        for row in reader:
-            arr.append(list(row))
-        newarr = []
-        for i in arr[1:]:
-            dictry = {}
-            for value in range(len(i)):
-                dictry[arr[0][value]] = i[value]
-            newarr.append(dictry)  # TODO считать содержимое csv файла
+    ...  # TODO считать содержимое csv файла
+    with open(INPUT_FILENAME) as file:#Открываю csv файл при помощи метода with open()
+        arr = []#Создаю перменную-массив в которую буду записывать данные
+        #При помощи метода библиотеки csv csv.DictReader() десериализую данные и считываю их построчно в словари, поскольку так работает данный метод
+        #затем записываю данные в формате словарей в специально созданную переменную-массив arr
+        for data in csv.DictReader(file):
+            arr.append(data)
 
-    with open(OUTPUT_FILENAME, 'w') as file:
-        json.dump(newarr, file, indent=4)  # TODO Сериализовать в файл с отступами равными 4
-
+    ...  # TODO Сериализовать в файл с отступами равными 4
+    # Для сериализации данных в формате json при помощи метода with создаю json файл с заданным названием
+    with open(OUTPUT_FILENAME, "w") as file:
+        # Далее при помощи метода json.dump() библиотеки json, используя в качестве аргументов полученный
+        # до этого массив словарей, переменную, которая отвечает за созданный файл, а также задаю значение
+        # для необязательного параметра indent, который отвечает за отступ и делаю его равным 4
+        json.dump(arr, file, indent=4)
 
 
 if __name__ == '__main__':
