@@ -1,43 +1,24 @@
 # TODO  Напишите функцию count_letters
-def count_letters(str):
-    alphabet = []
-    strl = str.lower()
-    k = 0
-    for i in range(len(strl)):
-        if strl[i].isalpha():
-            k += 1
-            if strl[i] not in alphabet:
-                alphabet.append(strl[i])
-    count_alphabet = []
-    count = 0
-    for j in alphabet:
-        for s in range(len(strl)):
-            if j==strl[s]:
-                count += 1
-        count_alphabet.append([j, count])
-        count = 0
-    count_alphabet.append(k)
-    return count_alphabet
-
-
+def count_letters(srt):
+    alphabet = {}
+    strl = srt.lower()#Делаю все символы в тексте одинакового размера
+    k = 0 #Добавляю счетчик
+    for alpha in strl:#Иду по символам строки
+        if alpha.isalpha():#Если символ является буквой
+            if alpha in alphabet:#Если буква уже была в словаре, увеличиваю ее количество на 1
+                alphabet[alpha] += 1
+            else: alphabet[alpha] = 1#Иначе создаю новое значение словаря с буквой и делаю количество равным 1
+            k += 1 #Tак как символ является буквой, увеличиваю счетчик
+    return alphabet, k#Возвращаю словарь с буквами и количеством каждой буквы по отдельности,
+                        #a также посчитанное количество букв
 
 # TODO Напишите функцию calculate_frequency
-def calculate_frequency(arr):
-
-
-    arrkeys = []
-    arrvalues = []
-    for i in arr:
-        if type(i) == list:
-            arrkeys.append(i[0])
-            value = str(round(i[1]/arr[-1], 2))
-            if len(value)< 4:
-                value += '0'
-            arrvalues.append(value)
-
-    final = {arrkeys[j]: arrvalues[j] for j in range(len(arrkeys)) }
+def calculate_frequency(dictry, k):#Функция принимает 2 значения словрь и количество букв
+    final = {}# создаю новый словарь для букв и частоты
+    for letter, count in dictry.items():# Двигаюсь по заданному словарю
+        final[letter] = count/k #Добавляю в новый словарь для каждой буквы(ключа) значение частоты
     return final
-
+    #Возвращаю словарь
 
 main_str = """
 У лукоморья дуб зелёный;
@@ -76,6 +57,7 @@ main_str = """
 """
 
 # TODO Распечатайте в столбик букву и её частоту в тексте
-dictry = calculate_frequency(count_letters(main_str))
-for alpha, value in dictry.items():
-    print(f'{alpha}: {value}')
+dictry_first, count = count_letters(main_str)#Двум переменным присуждаются два занчения, одно из которыз словарь, второе общее кол-во букв
+dictry = calculate_frequency(dictry_first, count)#Финальный словарь полачает значение возвращаемое второй функцией
+for alpha, value in dictry.items():#Двигаясь по словарю вывожу букву-ключ и значение частоты
+    print(f'{alpha}: {value:.2f}')#Значения частоты задаются форматом вывода 2-ух знаков после запятой
